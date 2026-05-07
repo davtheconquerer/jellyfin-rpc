@@ -1,0 +1,6 @@
+{
+    "client_id": "YOUR_DISCORD_APPLICATION_ID_HERE",
+    "server_url": "http://your-jellyfin-ip:8096",
+    "api_key": "YOUR_JELLYFIN_API_KEY_HERE",
+    "username": "YOUR_JELLYFIN_USERNAME_HERE"
+}
