@@ -87,12 +87,14 @@ def main():
     # Variables to "anchor" the green timer
     current_item_id = None
     cached_start_epoch = None
+    RPC_CLEARED = False
 
     while True:
         try:
             playback = get_playback_info(user_id)
             
             if playback:
+                RPC_CLEARED = False # Reset the cleared flag since we have something to show
                 # Format the Text Details
                 if playback["type"] == "Episode":
                     details = f"{playback['series']} - {playback['title']}"
@@ -134,11 +136,15 @@ def main():
                     )
                     print(f"Watching - {details} [{timing_display}]")
             else:
-                rpc.clear()
-                current_item_id = None # Reset anchor
-                cached_start_epoch = None
-                print("Nothing playing. Cleared RPC.")
-                
+                if not RPC_CLEARED: # Only clear if we haven't already
+                    rpc.clear()
+                    RPC_CLEARED = True
+                    current_item_id = None # Reset anchor
+                    cached_start_epoch = None
+                    print("Nothing playing. Cleared RPC.")
+                else:
+                    print("Nothing playing. RPC already cleared.")
+
         except Exception as e:
             print(f"Error in loop: {e}")
 
